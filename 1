@@ -1,0 +1,8 @@
+: SELECT l.loan_id,l.provider_loan_id,r.outstanding_amount, i.installment_amount, ld.penal_due, ld.bcc_amount,i.due_date,i.processing_date, i.status,case when i.due_date::DATE = l.first_emi_at::DATE then l.pre_emi else 0 end as pre_emi_adjustment FROM loans_loan l 
+INNER JOIN core_installments i ON l.loan_id = i.loan_id 
+INNER JOIN reports_latestloanvalues r ON r.loan_id = l.loan_id
+inner join loans_loandata_latest ld on ld.loan_id = l.loan_id
+WHERE l.status = 'open' AND l.repayment_role IN (1, 2) 
+AND r.dpd_bucket in (0,1,2) 
+AND i.due_date::DATE IN ('2025-06-03','2025-06-05')
+AND r.first_unpaid_emi_at::DATE in (i.due_date::DATE, (i.due_date::DATE + interval '1 month')::date)

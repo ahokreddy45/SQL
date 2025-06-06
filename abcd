@@ -1,0 +1,52 @@
+WITH master AS (
+    SELECT 
+        master_user_id,
+        disbursal_month,
+        emi,
+        loan_type,
+        amount,
+        tenure,
+        first_emi_at,
+        provider_scheme,
+        months_since_disbursal,
+        first_unpaid_emi_at,
+        last_emi_at,
+        as_of,
+        outstanding_amount,
+        paid_amount,
+        principal_outstanding,
+        adjustment_amount,
+        bucket_amount,
+        excess_funds,
+        days_past_due,
+        dpd_bucket,
+        writeoff_date,
+        writeoff_amount,
+        view_date,
+        mix_bucket_amount,
+        mix_total_outstanding,
+        provider_bounce_charge_due,
+        operational_opening_dpd_bucket,
+        year,
+        month,
+        day,
+        loan_provider,
+        disbursed_at,
+        ROW_NUMBER() OVER (
+            PARTITION BY master_user_id 
+            ORDER BY disbursed_at DESC
+        ) AS rK 
+    FROM reports_monthendloanvalues
+    WHERE disbursed_at = DATE('2025-01-01')
+      AND product_code NOT IN (
+          'kredit_bee_v0',
+          'fullerton_sv_vendor',
+          'rbl_vendor',
+          'stpl_vendor',
+          'fullerton_sv_vendor_v2',
+          'kredit_bee',
+          'revolve_to_emi',
+          'FLDG',
+          'go_upwards'
+      )
+)

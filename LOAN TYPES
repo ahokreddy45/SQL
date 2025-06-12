@@ -1,0 +1,2 @@
+loan_type_list = ['Personal Loan','Short Term Personal Loan','Credit Card','Microfinance - Personal Loan','Auto Loan (Personal)',
+                  'Business Loan - Unsecured','P2P Personal Loan','Loan on Credit Card','Secured Credit Card','GECL Loan Unsecured']

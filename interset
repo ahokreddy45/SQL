@@ -1,0 +1,26 @@
+=IF(OR(
+      A2="Credit Card",
+      A2="Loan on Credit Card",
+      A2="Secured Credit Card"),
+    5%,
+    IF(AND(
+         OR(A2="Personal Loan",
+            A2="Short Term Personal Loan",
+            A2="Microfinance - Personal Loan",
+            A2="Auto Loan (Personal)",
+            A2="Business Loan - Unsecured",
+            A2="P2P Personal Loan",
+            A2="GECL Loan Unsecured"),
+         B2<200000),
+       14%,
+       IF(AND(
+            OR(A2="Personal Loan",
+               A2="Short Term Personal Loan",
+               A2="Microfinance - Personal Loan",
+               A2="Auto Loan (Personal)",
+               A2="Business Loan - Unsecured",
+               A2="P2P Personal Loan",
+               A2="GECL Loan Unsecured"),
+            B2>=200000),
+          14%,
+          "")))
